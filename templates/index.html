@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <title>Concrete Strength Predictor</title>
+    </head>
+    <body>
+      <div style="text-align: center;font-size:100">Concrete Strength Predictor</div>
+      <p style="text-align: center;">Please enter the following details per m^3 of concrete</p>
+      <br>
+      <br>
+      <div style="text-align: center;">
+        <label for="cement">Cement: </label><br>
+        <input type="text" id="cement" name="cement" value="">&nbsp; kg<br>
+        <label for="bfs">Blast Furnace Slag: </label><br>
+        <input type="text" id="bfs" name="bfs" value="">&nbsp; kg<br>
+        <label for="fash">Fly Ash: </label><br>
+        <input type="text" id="fash" name="fash" value="">&nbsp; kg<br>
+        <label for="bfs">Water: </label><br>
+        <input type="text" id="bfs" name="bfs" value="">&nbsp; l<br>
+        <label for="bfs">Superplasticiser: </label><br>
+        <input type="text" id="sp" name="sp" value="">&nbsp; l<br>
+        <label for="courseA">Coarse Aggregate: </label><br>
+        <input type="text" id="courseA" name="course" value="">&nbsp; kg<br> 
+        <label for="fineA">Fine Aggregate: </label><br>
+        <input type="text" id="fineA" name="fine" value="">&nbsp; kg<br>
+        <label for="age">Age: </label><br>
+        <input type="text" id="age" name="age" value="">&nbsp; days<br>
+        <br>
+        <input type="submit" value="Predict"><br>
+        <br>
+
+     {{prediction_text}}
+	 </div>
+    </body>
+</html>
