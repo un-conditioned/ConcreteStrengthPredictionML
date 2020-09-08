@@ -1,0 +1,92 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np # linear algebra\n",
+    "import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n",
+    "\n",
+    "df = pd.read_csv(\"compresive_strength_concrete.csv\")\n",
+    "df.columns\n",
+    "\n",
+    "\n",
+    "df_new = df.rename(columns={'Cement (component 1)(kg in a m^3 mixture)':'Cement',\n",
+    "       'Blast Furnace Slag (component 2)(kg in a m^3 mixture)':'BFS',\n",
+    "       'Fly Ash (component 3)(kg in a m^3 mixture)':'Fly_Ash',\n",
+    "       'Water  (component 4)(kg in a m^3 mixture)':'Water',\n",
+    "       'Superplasticizer (component 5)(kg in a m^3 mixture)':'Superplasticizer',\n",
+    "       'Coarse Aggregate  (component 6)(kg in a m^3 mixture)':'Coarser_agg',\n",
+    "       'Fine Aggregate (component 7)(kg in a m^3 mixture)':'Fine_agg',\n",
+    "       'Age (day)':'Days',\n",
+    "       'Concrete compressive strength(MPa, megapascals) ':'Comp_str'})\n",
+    "\n",
+    "df_new.columns\n",
+    "\n",
+    "\n",
+    "\n",
+    "from sklearn.model_selection import train_test_split, cross_val_score\n",
+    "features = ['Cement', 'BFS', 'Fly_Ash', 'Water', 'Superplasticizer', 'Coarser_agg',\n",
+    "       'Fine_agg', 'Days']\n",
+    "targets = ['Comp_str']\n",
+    "\n",
+    "X_train, X_test, y_train, y_test = train_test_split(df_new[features], df_new[targets], test_size=0.20, random_state=42)\n",
+    "\n",
+    "from sklearn.ensemble import RandomForestRegressor\n",
+    "from sklearn.model_selection import GridSearchCV\n",
+    "\n",
+    "params_RFR = [{'n_estimators':[200, 250, 300, 350, 400, 450, 500, 550, 600]}]\n",
+    "\n",
+    "RFR = RandomForestRegressor()\n",
+    "grid_RFR = GridSearchCV(RFR, params_RFR, cv=3, scoring='r2')\n",
+    "model_RFR = grid_RFR.fit(X_train, y_train.values.ravel())\n",
+    "\n",
+    "\n",
+    "RFR_1 = RandomForestRegressor(n_estimators=300, criterion='mse')\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "model_RFR_1 = RFR_1.fit(X_train,y_train.values.ravel())\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "y_RFR1 = model_RFR_1.predict(X_test)\n",
+    "\n",
+    "\n",
+    "\n",
+    "import pickle\n",
+    "\n",
+    "pickle.dump(RFR_1,open('model.pkl','wb'))\n",
+    "\n",
+    "model = pickle.load(open('model.pkl','rb'))\n",
+    "\n",
+    "# New Section"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:root] *",
+   "language": "python",
+   "name": "conda-root-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
